@@ -1,0 +1,45 @@
+{
+  "name": "calendar-set",
+  "version": "0.0.0",
+  "description": "Framework agnostic calendar component",
+  "scripts": {
+    "build": "bili --format cjs,es,umd,umd-min",
+    "lint": "eslint --ext html src test",
+    "test": "bili && jest",
+    "test:watch": "run-p watch:*",
+    "watch:jest": "jest --watch",
+    "watch:build": "bili --watch"
+  },
+  "keywords": [
+    "calendar",
+    "component",
+    "UI",
+    "Svelte"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/calendar-set.cjs.js",
+  "module": "dist/calendar-set.es.js",
+  "unpkg": "dist/calendar-set.js",
+  "author": "katashin",
+  "license": "MIT",
+  "jest": {
+    "testRegex": "/test/.+\\.spec\\.js$"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.0.0-alpha.0",
+    "bili": "^3.0.11",
+    "eslint": "^4.19.0",
+    "eslint-config-ktsn": "^1.0.3",
+    "eslint-plugin-html": "^4.0.2",
+    "jest": "^22.4.2",
+    "npm-run-all": "^4.1.2",
+    "prettier": "1.11.1",
+    "rollup-plugin-svelte": "^4.0.0",
+    "svelte": "^1.58.0"
+  }
+}
