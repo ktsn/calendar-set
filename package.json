@@ -2,14 +2,6 @@
   "name": "calendar-set",
   "version": "0.0.0",
   "description": "Framework agnostic calendar component",
-  "scripts": {
-    "build": "bili --format cjs,es,umd,umd-min",
-    "lint": "eslint --ext html src test",
-    "test": "bili && jest",
-    "test:watch": "run-p watch:*",
-    "watch:jest": "jest --watch",
-    "watch:build": "bili --watch"
-  },
   "keywords": [
     "calendar",
     "component",
@@ -24,6 +16,20 @@
   "unpkg": "dist/calendar-set.js",
   "author": "katashin",
   "license": "MIT",
+  "homepage": "https://github.com/ktsn/calendar-set",
+  "bugs": "https://github.com/ktsn/calendar-set/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ktsn/calendar-set.git"
+  },
+  "scripts": {
+    "build": "bili --format cjs,es,umd,umd-min",
+    "lint": "eslint --ext html src test",
+    "test": "bili && jest",
+    "test:watch": "run-p watch:*",
+    "watch:jest": "jest --watch",
+    "watch:build": "bili --watch"
+  },
   "jest": {
     "testRegex": "/test/.+\\.spec\\.js$"
   },
