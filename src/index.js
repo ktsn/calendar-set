@@ -1,2 +1,1 @@
-export { default as Calendar } from './Calendar.html'
-export default {}
+export { default as DateCalendar } from './DateCalendar.html'
