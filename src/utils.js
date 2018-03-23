@@ -14,7 +14,7 @@ export function accumlateWhile(fn, condition) {
   return res
 }
 
-export function format(str, values) {
+export function format(str, ...values) {
   const placeholderRE = /\{(\d+)\}/g
   const escapedRE = /\\\{(\d+)\\\}/g
 

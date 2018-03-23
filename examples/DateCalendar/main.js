@@ -1,5 +1,8 @@
-import DateCalendar from '../../src/DateCalendar.html'
+import { en, DateCalendar } from '../../src'
 
 new DateCalendar({
-  target: document.getElementById('app')
+  target: document.getElementById('app'),
+  data: {
+    locales: en
+  }
 })

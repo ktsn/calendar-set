@@ -1,15 +1,45 @@
-<table class="calendar">
+<p class="calendar-header">
+  <span class="calendar-year">
+    {{format(locales.year, current.year)}}
+  </span>
+  <span class="calendar-month">
+    {{format(locales.months[current.month])}}
+  </span>
+</p>
+
+<table class="calendar-table">
   <thead>
     <tr>
-      <td class="calendar-cell"></td>
+      {{#each locales.weekDays as weekDay}}
+      <th scope="col" class="calendar-cell week">
+        {{format(weekDay)}}
+      </th>
+      {{/each}}
     </tr>
   </thead>
+
+  <tbody>
+    {{#each calendar as row}}
+    <tr>
+      {{#each row as cell}}
+      <td class="calendar-cell">
+        {{cell ? cell.getDate() : ''}}
+      </td>
+      {{/each}}
+    </tr>
+    {{/each}}
+  </tbody>
 </table>
 
 <script>
+  import { format } from './utils'
   import { getMonthCalendar } from './domain'
 
   export default {
+    helpers: {
+      format
+    },
+
     data() {
       const today = new Date()
 
@@ -17,7 +47,9 @@
         current: {
           year: today.getFullYear(),
           month: today.getMonth()
-        }
+        },
+        selected: null,
+        selectedEnd: null
       }
     },
 
