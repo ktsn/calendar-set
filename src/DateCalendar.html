@@ -1,35 +1,37 @@
-<p class="calendar-header">
-  <span class="calendar-year">
-    {{format(locales.year, current.year)}}
-  </span>
-  <span class="calendar-month">
-    {{format(locales.months[current.month])}}
-  </span>
-</p>
+<div class="calendar">
+  <p class="calendar-header">
+    <span class="calendar-year">
+      {{format(locales.year, current.year)}}
+    </span>
+    <span class="calendar-month">
+      {{format(locales.months[current.month])}}
+    </span>
+  </p>
 
-<table class="calendar-table">
-  <thead>
-    <tr>
-      {{#each locales.weekDays as weekDay}}
-      <th scope="col" class="calendar-cell week">
-        {{format(weekDay)}}
-      </th>
-      {{/each}}
-    </tr>
-  </thead>
+  <table class="calendar-table">
+    <thead>
+      <tr>
+        {{#each locales.weekDays as weekDay}}
+        <th scope="col" class="calendar-cell week">
+          {{format(weekDay)}}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
 
-  <tbody>
-    {{#each calendar as row}}
-    <tr>
-      {{#each row as cell}}
-      <td class="calendar-cell">
-        {{cell ? cell.getDate() : ''}}
-      </td>
+    <tbody>
+      {{#each calendar as row}}
+      <tr>
+        {{#each row as cell}}
+        <td class="calendar-cell">
+          {{cell ? cell.getDate() : ''}}
+        </td>
+        {{/each}}
+      </tr>
       {{/each}}
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
 <script>
   import { format } from './utils'
@@ -62,4 +64,23 @@
 </script>
 
 <style>
+  .calendar {
+    --calendar-cell-size: 50px;
+    width: calc(var(--calendar-cell-size) * 7);
+  }
+
+  .calendar-header {
+    text-align: center;
+  }
+
+  .calendar-table {
+    width: 100%;
+  }
+
+  .calendar-cell {
+    height: var(--calendar-cell-size);
+    width: var(--calendar-cell-size);
+    text-align: center;
+    vertical-align: middle;
+  }
 </style>
