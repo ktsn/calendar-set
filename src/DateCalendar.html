@@ -1,0 +1,33 @@
+<table class="calendar">
+  <thead>
+    <tr>
+      <td class="calendar-cell"></td>
+    </tr>
+  </thead>
+</table>
+
+<script>
+  import { getMonthCalendar } from './domain'
+
+  export default {
+    data() {
+      const today = new Date()
+
+      return {
+        current: {
+          year: today.getFullYear(),
+          month: today.getMonth()
+        }
+      }
+    },
+
+    computed: {
+      calendar: current => {
+        return getMonthCalendar(current.year, current.month)
+      }
+    }
+  }
+</script>
+
+<style>
+</style>

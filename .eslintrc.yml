@@ -2,3 +2,5 @@
   extends: ktsn
   plugins:
     - html
+  env:
+    browser: true
