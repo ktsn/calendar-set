@@ -1,6 +1,6 @@
 # calendar-set
 
-Framework agnostic calendar component
+Framework agnostic calendar components
 
 ## License
 
