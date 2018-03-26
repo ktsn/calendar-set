@@ -1,19 +1,19 @@
 <div class="calendar">
   <p class="calendar-header">
     <span class="calendar-year">
-      {{format(locales.year, current.year)}}
+      {{ format(locales.year, current.year) }}
     </span>
     <span class="calendar-month">
-      {{format(locales.months[current.month])}}
+      {{ format(locales.months[current.month]) }}
     </span>
   </p>
 
   <table class="calendar-table">
     <thead>
       <tr>
-        {{#each locales.weekDays as weekDay}}
-        <th scope="col" class="calendar-cell week">
-          {{format(weekDay)}}
+        {{#each locales.weekDays as weekDay, i}}
+        <th scope="col" class="calendar-cell heading {{ weekClass(i) }}">
+          {{ format(weekDay) }}
         </th>
         {{/each}}
       </tr>
@@ -22,9 +22,13 @@
     <tbody>
       {{#each calendar as row}}
       <tr>
-        {{#each row as cell}}
-        <td class="calendar-cell">
-          {{cell ? cell.getDate() : ''}}
+        {{#each row as cell, i}}
+        <td class="calendar-cell {{ weekClass(i) }}">
+          {{#if cell}}
+          <button class="calendar-cell-button {{ cellClass(cell, selected) }}" on:click="onClickCell(cell)">
+            {{ cell.getDate() }}
+          </button>
+          {{/if}}
         </td>
         {{/each}}
       </tr>
@@ -35,11 +39,37 @@
 
 <script>
   import { format } from './utils'
-  import { getMonthCalendar } from './domain'
+  import { getMonthCalendar, equalsDate } from './domain'
 
   export default {
     helpers: {
-      format
+      format,
+
+      weekClass(week) {
+        if (week === 0) {
+          return 'sunday'
+        }
+
+        if (week === 6) {
+          return 'saturday'
+        }
+
+        return ''
+      },
+
+      cellClass(date, selected) {
+        const res = []
+
+        if (!date) {
+          res.push('')
+        }
+
+        if (date && selected && equalsDate(date, selected)) {
+          res.push('selected')
+        }
+
+        return res.join(' ')
+      }
     },
 
     data() {
@@ -50,14 +80,20 @@
           year: today.getFullYear(),
           month: today.getMonth()
         },
-        selected: null,
-        selectedEnd: null
+        selected: null
       }
     },
 
     computed: {
       calendar: current => {
         return getMonthCalendar(current.year, current.month)
+      }
+    },
+
+    methods: {
+      onClickCell(date) {
+        if (!date) return
+        this.fire('select', date)
       }
     }
   }
@@ -70,17 +106,50 @@
   }
 
   .calendar-header {
+    margin: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
     text-align: center;
   }
 
   .calendar-table {
     width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
   }
 
   .calendar-cell {
+    padding: 0;
     height: var(--calendar-cell-size);
     width: var(--calendar-cell-size);
     text-align: center;
     vertical-align: middle;
+  }
+
+  .calendar-cell-button {
+    display: block;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    border-width: 0;
+    font-size: inherit;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .calendar-cell-button:hover {
+    background-color: #aaa;
+  }
+
+  .calendar-cell-button.selected {
+    background-color: #666;
+    color: #fff;
+  }
+
+  .calendar-cell.heading {
+    height: calc(var(--calendar-cell-size) * 0.6);
+    font-weight: bold;
+    font-size: 0.8em;
   }
 </style>
