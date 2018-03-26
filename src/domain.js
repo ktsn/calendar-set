@@ -26,11 +26,24 @@ export function getMonthCalendar(year, month) {
       const last = prev[WEEK_DAYS_NUM - 1]
       if (!last) return false
 
-      return equalsMonth(last, year, month)
+      const next = new Date(
+        last.getFullYear(),
+        last.getMonth(),
+        last.getDate() + 1
+      )
+      return equalsMonth(next, year, month)
     }
   )
 }
 
 function equalsMonth(date, year, month) {
   return date.getFullYear() === year && date.getMonth() === month
+}
+
+export function equalsDate(a, b) {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  )
 }
