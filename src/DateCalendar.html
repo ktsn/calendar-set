@@ -138,8 +138,11 @@
   .calendar {
     --calendar-cell-size: 50px;
     --calendar-color-hovered: #ccc;
+    --calendar-text-color-hovered: inherit;
     --calendar-color-highlighted: var(--calendar-color-hovered);
+    --calendar-text-color-highlighted: var(--calendar-text-color-hovred);
     --calendar-color-selected: #888;
+    --calendar-text-color-selected: #fff;
     width: calc(var(--calendar-cell-size) * 7);
   }
 
@@ -180,15 +183,17 @@
 
   .calendar-cell-button:hover {
     background-color: var(--calendar-color-hovered);
+    color: var(--calendar-text-color-hovered);
   }
 
   .calendar-cell-button.highlighted {
     background-color: var(--calendar-color-highlighted);
+    color: var(--calendar-text-color-highlighted);
   }
 
   .calendar-cell-button.selected {
     background-color: var(--calendar-color-selected);
-    color: #fff;
+    color: var(--calendar-text-color-selected);
   }
 
   .calendar-cell.heading {
