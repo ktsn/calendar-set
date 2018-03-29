@@ -1,3 +1,7 @@
+export function no() {
+  return false
+}
+
 export function range(len) {
   return Array.apply(null, Array(len)).map((_, i) => i)
 }

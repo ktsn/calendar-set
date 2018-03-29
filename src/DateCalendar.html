@@ -26,8 +26,8 @@
         {{#each row as cell, i}}
         <td class="calendar-cell {{ weekClass(i) }}">
           {{#if cell}}
-          <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted && isHighlighted(cell, selected) }}"
-            on:click="onClickCell(cell)" on:mouseenter="onHoverCell(cell)">
+          <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted(cell, selected) }}" on:click="onClickCell(cell)"
+            on:mouseenter="onHoverCell(cell)">
             {{ cell.getDate() }}
           </CellButton>
           {{/if}}
@@ -41,11 +41,13 @@
 </div>
 
 <script>
-  import { format } from './utils'
+  import { no, format } from './utils'
   import { getMonthCalendar, equalsDate } from './domain'
   import CellButton from './CellButton.html'
 
   function isSelected(date, selected) {
+    if (!selected) return false
+
     selected = Array.isArray(selected) ? selected : [selected]
 
     return selected.reduce((acc, s) => {
@@ -90,7 +92,8 @@
           year: today.getFullYear(),
           month: today.getMonth()
         },
-        selected: null
+        selected: null,
+        isHighlighted: no
       }
     },
 
