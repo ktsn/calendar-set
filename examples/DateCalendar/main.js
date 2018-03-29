@@ -1,5 +1,5 @@
-import DateCalendar from '../../src/DateCalendar.html'
+import App from './App.html'
 
-new DateCalendar({
+new App({
   target: document.getElementById('app')
 })

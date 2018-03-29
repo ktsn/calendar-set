@@ -1,15 +1,95 @@
-<table class="calendar">
-  <thead>
-    <tr>
-      <td class="calendar-cell"></td>
-    </tr>
-  </thead>
-</table>
+<div class="calendar">
+  {{#if locale}}
+  <p class="calendar-header">
+    <span class="calendar-year">
+      {{ format(locale.year, current.year) }}
+    </span>
+    <span class="calendar-month">
+      {{ format(locale.months[current.month]) }}
+    </span>
+  </p>
+
+  <table class="calendar-table">
+    <thead>
+      <tr>
+        {{#each locale.weekDays as weekDay, i}}
+        <th scope="col" class="calendar-cell heading {{ weekClass(i) }}">
+          {{ format(weekDay) }}
+        </th>
+        {{/each}}
+      </tr>
+    </thead>
+
+    <tbody on:mouseleave="onHoverOut()">
+      {{#each calendar as row}}
+      <tr>
+        {{#each row as cell, i}}
+        <td class="calendar-cell {{ weekClass(i) }}">
+          {{#if cell}}
+          <button class="calendar-cell-button {{ cellClass(cell, selected, isHighlighted) }}" on:click="onClickCell(cell)" on:mouseenter="onHoverCell(cell)">
+            {{ cell.getDate() }}
+          </button>
+          {{/if}}
+        </td>
+        {{/each}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{/if}}
+</div>
 
 <script>
-  import { getMonthCalendar } from './domain'
+  import { format } from './utils'
+  import { getMonthCalendar, equalsDate } from './domain'
+
+  function isSelected(date, selected) {
+    selected = Array.isArray(selected) ? selected : [selected]
+
+    return selected.reduce((acc, s) => {
+      return acc || equalsDate(date, s)
+    }, false)
+  }
 
   export default {
+    setup(Ctor) {
+      Ctor.setLocale = function setLocale(locale) {
+        Ctor.locale = locale
+      }
+    },
+
+    helpers: {
+      format,
+
+      weekClass(week) {
+        if (week === 0) {
+          return 'sunday'
+        }
+
+        if (week === 6) {
+          return 'saturday'
+        }
+
+        return ''
+      },
+
+      cellClass(date, selected, isHighlighted) {
+        const res = []
+
+        if (date) {
+          if (selected && isSelected(date, selected)) {
+            res.push('selected')
+          }
+
+          if (isHighlighted && isHighlighted(date, selected)) {
+            res.push('highlighted')
+          }
+        }
+
+        return res.join(' ')
+      }
+    },
+
     data() {
       const today = new Date()
 
@@ -17,7 +97,8 @@
         current: {
           year: today.getFullYear(),
           month: today.getMonth()
-        }
+        },
+        selected: null
       }
     },
 
@@ -25,9 +106,99 @@
       calendar: current => {
         return getMonthCalendar(current.year, current.month)
       }
+    },
+
+    methods: {
+      onClickCell(date) {
+        if (!date) return
+        this.fire('select', date)
+      },
+
+      onHoverCell(date) {
+        this.fire('hover', date)
+      },
+
+      onHoverOut() {
+        this.fire('hover', null)
+      }
+    },
+
+    oncreate() {
+      const locale = this.get('locale')
+      if (!locale) {
+        this.set({
+          locale: this.constructor.locale
+        })
+      }
     }
   }
 </script>
 
 <style>
+  .calendar {
+    --calendar-cell-size: 50px;
+    --calendar-color-hovered: #ccc;
+    --calendar-text-color-hovered: inherit;
+    --calendar-color-highlighted: var(--calendar-color-hovered);
+    --calendar-text-color-highlighted: var(--calendar-text-color-hovred);
+    --calendar-color-selected: #888;
+    --calendar-text-color-selected: #fff;
+    width: calc(var(--calendar-cell-size) * 7);
+  }
+
+  .calendar-header {
+    margin: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  .calendar-cell {
+    padding: 0;
+    height: var(--calendar-cell-size);
+    width: var(--calendar-cell-size);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .calendar-cell-button {
+    display: block;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    border-width: 0;
+    font-size: inherit;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    transition: 100ms ease-out;
+    transition-property: background-color, color;
+  }
+
+  .calendar-cell-button:hover {
+    background-color: var(--calendar-color-hovered);
+    color: var(--calendar-text-color-hovered);
+  }
+
+  .calendar-cell-button.highlighted {
+    background-color: var(--calendar-color-highlighted);
+    color: var(--calendar-text-color-highlighted);
+  }
+
+  .calendar-cell-button.selected {
+    background-color: var(--calendar-color-selected);
+    color: var(--calendar-text-color-selected);
+  }
+
+  .calendar-cell.heading {
+    height: calc(var(--calendar-cell-size) * 0.6);
+    font-weight: bold;
+    font-size: 0.8em;
+  }
 </style>
