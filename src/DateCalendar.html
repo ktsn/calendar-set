@@ -1,17 +1,18 @@
 <div class="calendar">
+  {{#if locale}}
   <p class="calendar-header">
     <span class="calendar-year">
-      {{ format(locales.year, current.year) }}
+      {{ format(locale.year, current.year) }}
     </span>
     <span class="calendar-month">
-      {{ format(locales.months[current.month]) }}
+      {{ format(locale.months[current.month]) }}
     </span>
   </p>
 
   <table class="calendar-table">
     <thead>
       <tr>
-        {{#each locales.weekDays as weekDay, i}}
+        {{#each locale.weekDays as weekDay, i}}
         <th scope="col" class="calendar-cell heading {{ weekClass(i) }}">
           {{ format(weekDay) }}
         </th>
@@ -35,6 +36,7 @@
       {{/each}}
     </tbody>
   </table>
+  {{/if}}
 </div>
 
 <script>
@@ -42,6 +44,12 @@
   import { getMonthCalendar, equalsDate } from './domain'
 
   export default {
+    setup(Ctor) {
+      Ctor.setLocale = function setLocale(locale) {
+        Ctor.locale = locale
+      }
+    },
+
     helpers: {
       format,
 
@@ -94,6 +102,15 @@
       onClickCell(date) {
         if (!date) return
         this.fire('select', date)
+      }
+    },
+
+    oncreate() {
+      const locale = this.get('locale')
+      if (!locale) {
+        this.set({
+          locale: this.constructor.locale
+        })
       }
     }
   }
