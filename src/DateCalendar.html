@@ -26,7 +26,7 @@
         {{#each row as cell, i}}
         <td class="calendar-cell {{ weekClass(i) }}">
           {{#if cell}}
-          <button class="calendar-cell-button {{ cellClass(cell, selected) }}" on:click="onClickCell(cell)">
+          <button class="calendar-cell-button {{ cellClass(cell, selected, isHighlighted) }}" on:click="onClickCell(cell)">
             {{ cell.getDate() }}
           </button>
           {{/if}}
@@ -42,6 +42,14 @@
 <script>
   import { format } from './utils'
   import { getMonthCalendar, equalsDate } from './domain'
+
+  function isSelected(date, selected) {
+    selected = Array.isArray(selected) ? selected : [selected]
+
+    return selected.reduce((acc, s) => {
+      return acc || equalsDate(date, s)
+    }, false)
+  }
 
   export default {
     setup(Ctor) {
@@ -65,15 +73,17 @@
         return ''
       },
 
-      cellClass(date, selected) {
+      cellClass(date, selected, isHighlighted) {
         const res = []
 
-        if (!date) {
-          res.push('')
-        }
+        if (date) {
+          if (selected && isSelected(date, selected)) {
+            res.push('selected')
+          }
 
-        if (date && selected && equalsDate(date, selected)) {
-          res.push('selected')
+          if (isHighlighted && isHighlighted(date, selected)) {
+            res.push('highlighted')
+          }
         }
 
         return res.join(' ')
@@ -119,6 +129,9 @@
 <style>
   .calendar {
     --calendar-cell-size: 50px;
+    --calendar-color-hovered: #ccc;
+    --calendar-color-highlighted: var(--calendar-color-hovered);
+    --calendar-color-selected: #888;
     width: calc(var(--calendar-cell-size) * 7);
   }
 
@@ -156,11 +169,15 @@
   }
 
   .calendar-cell-button:hover {
-    background-color: #aaa;
+    background-color: var(--calendar-color-hovered);
+  }
+
+  .calendar-cell-button.highlighted {
+    background-color: var(--calendar-color-highlighted);
   }
 
   .calendar-cell-button.selected {
-    background-color: #666;
+    background-color: var(--calendar-color-selected);
     color: #fff;
   }
 
