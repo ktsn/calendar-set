@@ -3,6 +3,15 @@ import { accumlateWhile, range } from './utils'
 const WEEK_DAYS_NUM = 7
 const SUNDAY = 0
 
+/**
+ * Meant to be passed to component setup option.
+ */
+export function setupCalendar(Ctor) {
+  Ctor.setLocale = function setLocale(locale) {
+    Ctor.locale = locale
+  }
+}
+
 export function getMonthCalendar(year, month) {
   const target = new Date(year, month, 1)
   const offsetOfFirstDate = SUNDAY - target.getDay()

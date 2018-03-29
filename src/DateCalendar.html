@@ -42,7 +42,7 @@
 
 <script>
   import { no, format } from './utils'
-  import { getMonthCalendar, equalsDate } from './domain'
+  import { setupCalendar, getMonthCalendar, equalsDate } from './domain'
   import CellButton from './CellButton.html'
 
   function isSelected(date, selected) {
@@ -68,11 +68,7 @@
   }
 
   export default {
-    setup(Ctor) {
-      Ctor.setLocale = function setLocale(locale) {
-        Ctor.locale = locale
-      }
-    },
+    setup: setupCalendar,
 
     components: {
       CellButton
