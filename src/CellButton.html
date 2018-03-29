@@ -1,0 +1,64 @@
+<button class="calendar-cell-button {{ stateClass(selected, highlighted) }}" on:click="fire('click', event)" on:mouseenter="fire('mouseenter', event)">
+  <slot></slot>
+</button>
+
+<script>
+  function stateClass(selected, highlighted) {
+    const res = []
+
+    if (selected) {
+      res.push('selected')
+    }
+
+    if (highlighted) {
+      res.push('highlighted')
+    }
+
+    return res.join(' ')
+  }
+
+  export default {
+    helpers: {
+      stateClass
+    }
+  }
+</script>
+
+<style>
+  .calendar-cell-button {
+    --calendar-color-hovered: #ccc;
+    --calendar-text-color-hovered: inherit;
+    --calendar-color-highlighted: var(--calendar-color-hovered);
+    --calendar-text-color-highlighted: var(--calendar-text-color-hovred);
+    --calendar-color-selected: #888;
+    --calendar-text-color-selected: #fff;
+
+    display: block;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    border-width: 0;
+    font-size: inherit;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    transition: 100ms ease-out;
+    transition-property: background-color, color;
+  }
+
+
+  .calendar-cell-button:hover {
+    background-color: var(--calendar-color-hovered);
+    color: var(--calendar-text-color-hovered);
+  }
+
+  .calendar-cell-button.highlighted {
+    background-color: var(--calendar-color-highlighted);
+    color: var(--calendar-text-color-highlighted);
+  }
+
+  .calendar-cell-button.selected {
+    background-color: var(--calendar-color-selected);
+    color: var(--calendar-text-color-selected);
+  }
+</style>

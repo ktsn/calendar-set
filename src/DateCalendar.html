@@ -26,9 +26,10 @@
         {{#each row as cell, i}}
         <td class="calendar-cell {{ weekClass(i) }}">
           {{#if cell}}
-          <button class="calendar-cell-button {{ cellClass(cell, selected, isHighlighted) }}" on:click="onClickCell(cell)" on:mouseenter="onHoverCell(cell)">
+          <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted && isHighlighted(cell, selected) }}"
+            on:click="onClickCell(cell)" on:mouseenter="onHoverCell(cell)">
             {{ cell.getDate() }}
-          </button>
+          </CellButton>
           {{/if}}
         </td>
         {{/each}}
@@ -42,6 +43,7 @@
 <script>
   import { format } from './utils'
   import { getMonthCalendar, equalsDate } from './domain'
+  import CellButton from './CellButton.html'
 
   function isSelected(date, selected) {
     selected = Array.isArray(selected) ? selected : [selected]
@@ -51,6 +53,18 @@
     }, false)
   }
 
+  function weekClass(week) {
+    if (week === 0) {
+      return 'sunday'
+    }
+
+    if (week === 6) {
+      return 'saturday'
+    }
+
+    return ''
+  }
+
   export default {
     setup(Ctor) {
       Ctor.setLocale = function setLocale(locale) {
@@ -58,36 +72,14 @@
       }
     },
 
+    components: {
+      CellButton
+    },
+
     helpers: {
       format,
-
-      weekClass(week) {
-        if (week === 0) {
-          return 'sunday'
-        }
-
-        if (week === 6) {
-          return 'saturday'
-        }
-
-        return ''
-      },
-
-      cellClass(date, selected, isHighlighted) {
-        const res = []
-
-        if (date) {
-          if (selected && isSelected(date, selected)) {
-            res.push('selected')
-          }
-
-          if (isHighlighted && isHighlighted(date, selected)) {
-            res.push('highlighted')
-          }
-        }
-
-        return res.join(' ')
-      }
+      isSelected,
+      weekClass
     },
 
     data() {
@@ -137,12 +129,6 @@
 <style>
   .calendar {
     --calendar-cell-size: 50px;
-    --calendar-color-hovered: #ccc;
-    --calendar-text-color-hovered: inherit;
-    --calendar-color-highlighted: var(--calendar-color-hovered);
-    --calendar-text-color-highlighted: var(--calendar-text-color-hovred);
-    --calendar-color-selected: #888;
-    --calendar-text-color-selected: #fff;
     width: calc(var(--calendar-cell-size) * 7);
   }
 
@@ -165,35 +151,6 @@
     width: var(--calendar-cell-size);
     text-align: center;
     vertical-align: middle;
-  }
-
-  .calendar-cell-button {
-    display: block;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    border-width: 0;
-    font-size: inherit;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    transition: 100ms ease-out;
-    transition-property: background-color, color;
-  }
-
-  .calendar-cell-button:hover {
-    background-color: var(--calendar-color-hovered);
-    color: var(--calendar-text-color-hovered);
-  }
-
-  .calendar-cell-button.highlighted {
-    background-color: var(--calendar-color-highlighted);
-    color: var(--calendar-text-color-highlighted);
-  }
-
-  .calendar-cell-button.selected {
-    background-color: var(--calendar-color-selected);
-    color: var(--calendar-text-color-selected);
   }
 
   .calendar-cell.heading {
