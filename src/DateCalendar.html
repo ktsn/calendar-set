@@ -20,13 +20,13 @@
       </tr>
     </thead>
 
-    <tbody>
+    <tbody on:mouseleave="onHoverOut()">
       {{#each calendar as row}}
       <tr>
         {{#each row as cell, i}}
         <td class="calendar-cell {{ weekClass(i) }}">
           {{#if cell}}
-          <button class="calendar-cell-button {{ cellClass(cell, selected, isHighlighted) }}" on:click="onClickCell(cell)">
+          <button class="calendar-cell-button {{ cellClass(cell, selected, isHighlighted) }}" on:click="onClickCell(cell)" on:mouseenter="onHoverCell(cell)">
             {{ cell.getDate() }}
           </button>
           {{/if}}
@@ -112,6 +112,14 @@
       onClickCell(date) {
         if (!date) return
         this.fire('select', date)
+      },
+
+      onHoverCell(date) {
+        this.fire('hover', date)
+      },
+
+      onHoverOut() {
+        this.fire('hover', null)
       }
     },
 

@@ -7,7 +7,8 @@
 
 <section>
   <h2>Range</h2>
-  <DateCalendar selected="{{ rangeSelected }}" isHighlighted="{{ isHighlighted }}" on:select="onSelectRange(event)" />
+  <DateCalendar selected="{{ rangeSelected }}" isHighlighted="{{ isHighlighted(rangeHovered, rangeTargetIndex) }}" on:select="onSelectRange(event)"
+    on:hover="onHoverRange(event)" />
 </section>
 
 <script>
@@ -24,30 +25,35 @@
       return {
         normalSelected: new Date(),
         rangeSelected: [new Date()],
+        rangeHovered: null,
         rangeTargetIndex: 0
       }
     },
 
     helpers: {
-      isHighlighted(target, [first, second]) {
-        if (!first || !second) return false
+      isHighlighted(hovered, targetIndex) {
+        return (target, [first, second]) => {
+          second = targetIndex === 0 ? second : hovered
 
-        const year = target.getFullYear()
-        if (first.getFullYear() > year || second.getFullYear() < year) {
-          return false
+          if (!first || !second) return false
+
+          const year = target.getFullYear()
+          if (first.getFullYear() > year || second.getFullYear() < year) {
+            return false
+          }
+
+          const month = target.getMonth()
+          if (first.getMonth() > month || second.getMonth() < month) {
+            return false
+          }
+
+          const date = target.getDate()
+          if (first.getDate() > date || second.getDate() < date) {
+            return false
+          }
+
+          return true
         }
-
-        const month = target.getMonth()
-        if (first.getMonth() > month || second.getMonth() < month) {
-          return false
-        }
-
-        const date = target.getDate()
-        if (first.getDate() > date || second.getDate() < date) {
-          return false
-        }
-
-        return true
       }
     },
 
@@ -64,6 +70,12 @@
         this.set({
           rangeSelected: list.slice(0, index).concat(date),
           rangeTargetIndex: 1 - index
+        })
+      },
+
+      onHoverRange(date) {
+        this.set({
+          rangeHovered: date
         })
       }
     }
