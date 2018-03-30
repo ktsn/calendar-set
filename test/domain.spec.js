@@ -1,4 +1,4 @@
-import { getMonthCalendar, equalsDate } from '../src/domain'
+import { getMonthCalendar, equalsDate, lessThanDate } from '../src/domain'
 
 describe('getMonthCalendar', () => {
   it('should return two dimensional array that represents a calendar of month', () => {
@@ -37,7 +37,7 @@ describe('getMonthCalendar', () => {
 })
 
 describe('equalsDate', () => {
-  it('checks equality of date', () => {
+  it('checks equality of dates', () => {
     const a = new Date(2018, 2, 30, 0, 12, 34)
     const b = new Date(2018, 2, 30, 12, 0, 0)
     const c = new Date(2018, 2, 29, 12, 0, 0)
@@ -45,5 +45,19 @@ describe('equalsDate', () => {
     expect(equalsDate(a, b)).toBe(true)
     expect(equalsDate(a, c)).toBe(false)
     expect(equalsDate(b, c)).toBe(false)
+  })
+})
+
+describe('lessThanDate', () => {
+  it('compares the dates', () => {
+    const a = new Date(2018, 2, 30, 0, 12, 34)
+    const b = new Date(2018, 2, 30, 12, 0, 0)
+    const c = new Date(2018, 2, 29, 12, 0, 0)
+    const d = new Date(2017, 11, 20)
+
+    expect(lessThanDate(a, b)).toBe(false)
+    expect(lessThanDate(a, c)).toBe(false)
+    expect(lessThanDate(c, a)).toBe(true)
+    expect(lessThanDate(d, a)).toBe(true)
   })
 })
