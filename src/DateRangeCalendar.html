@@ -2,35 +2,22 @@
   on:hover="onHover(event)"></DateCalendar>
 
 <script>
-  import { setupHigherCalendar } from './domain'
+  import { setupHigherCalendar, compareDateAsc } from './domain'
   import { arrayfy } from './utils'
   import DateCalendar from './DateCalendar.html'
 
   function isHighlighted(hovered, targetIndex) {
     return (target, selected) => {
-      selected = arrayfy(selected)
+      const [first, second] = arrayfy(selected)
+      const list = [
+        first,
+        target,
+        targetIndex === 0 ? second : hovered
+      ]
+        .filter(x => x)
+        .sort(compareDateAsc)
 
-      let [first, second] = selected
-      second = targetIndex === 0 ? second : hovered
-
-      if (!first || !second) return false
-
-      const year = target.getFullYear()
-      if (first.getFullYear() > year || second.getFullYear() < year) {
-        return false
-      }
-
-      const month = target.getMonth()
-      if (first.getMonth() > month || second.getMonth() < month) {
-        return false
-      }
-
-      const date = target.getDate()
-      if (first.getDate() > date || second.getDate() < date) {
-        return false
-      }
-
-      return true
+      return list.length === 3 && list[1] === target
     }
   }
 
@@ -55,7 +42,9 @@
       onSelect(date) {
         const index = this.get('targetIndex')
         const prevSelected = arrayfy(this.get('selected'))
-        const selected = prevSelected.slice(0, index).concat(date)
+        const selected = prevSelected.slice(0, index)
+          .concat(date)
+          .sort(compareDateAsc)
 
         this.set({
           selected,

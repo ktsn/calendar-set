@@ -53,7 +53,7 @@ Similar to DateCalendar but can be selected range of two date.
 
 #### Events
 
-* `fire('select', selectedDate)`
+* `fire('select', selectedDate)`: `selectedDate` is an array and always sorted with ASC order by date.
 
 ## License
 

@@ -54,21 +54,21 @@ function equalsMonth(date, year, month) {
 }
 
 export function equalsDate(a, b) {
-  return compareDate(a, b) === 0
+  return compareDateAsc(a, b) === 0
 }
 
 export function lessThanDate(a, b) {
-  return compareDate(a, b) < 0
+  return compareDateAsc(a, b) < 0
 }
 
-function compareDate(a, b) {
+export function compareDateAsc(a, b) {
   function loop(a, b, getters) {
     if (getters.length === 0) {
       return 0
     }
 
     const [getter, ...tail] = getters
-    const res = compare(getter(a), getter(b))
+    const res = compareAsc(getter(a), getter(b))
 
     if (res === 0) {
       return loop(a, b, tail)
@@ -79,7 +79,7 @@ function compareDate(a, b) {
   return loop(a, b, [getYear, getMonth, getDate])
 }
 
-function compare(a, b) {
+function compareAsc(a, b) {
   if (a < b) {
     return -1
   } else if (a > b) {
