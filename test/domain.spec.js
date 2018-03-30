@@ -1,4 +1,4 @@
-import { getMonthCalendar } from '../src/domain'
+import { getMonthCalendar, equalsDate } from '../src/domain'
 
 describe('getMonthCalendar', () => {
   it('should return two dimensional array that represents a calendar of month', () => {
@@ -33,5 +33,17 @@ describe('getMonthCalendar', () => {
       [d(25), d(26), d(27), d(28), d(29), d(30), d(31)]
     ])
     /* eslint-enable no-multi-spaces */
+  })
+})
+
+describe('equalsDate', () => {
+  it('checks equality of date', () => {
+    const a = new Date(2018, 2, 30, 0, 12, 34)
+    const b = new Date(2018, 2, 30, 12, 0, 0)
+    const c = new Date(2018, 2, 29, 12, 0, 0)
+
+    expect(equalsDate(a, b)).toBe(true)
+    expect(equalsDate(a, c)).toBe(false)
+    expect(equalsDate(b, c)).toBe(false)
   })
 })
