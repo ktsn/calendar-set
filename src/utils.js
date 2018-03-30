@@ -6,6 +6,21 @@ export function range(len) {
   return Array.apply(null, Array(len)).map((_, i) => i)
 }
 
+/**
+ * Convert the passed value to array.
+ * value == null -> []
+ * value == Array -> value
+ * otherwise -> [value]
+ */
+export function arrayfy(value) {
+  // prettier-ignore
+  return value == null
+    ? []
+    : Array.isArray(value)
+      ? value
+      : [value]
+}
+
 export function accumlateWhile(fn, condition) {
   const res = []
   let i = 0

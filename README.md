@@ -34,6 +34,27 @@ DateCalendar.setLocale(en)
 * `fire('select', selectedDate)`
 * `fire('hover', hoveredDate)`
 
+### DateRangeCalendar
+
+Similar to DateCalendar but can be selected range of two date.
+
+#### Data
+
+```ts
+{
+  current: {
+    year: number
+    month: number
+  }
+  selected: Date | Date[] | undefined
+  locale: Locale
+}
+```
+
+#### Events
+
+* `fire('select', selectedDate)`
+
 ## License
 
 MIT

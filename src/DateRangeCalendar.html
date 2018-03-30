@@ -1,0 +1,75 @@
+<DateCalendar selected="{{ selected }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, targetIndex) }}" on:select="onSelect(event)"
+  on:hover="onHover(event)"></DateCalendar>
+
+<script>
+  import { setupHigherCalendar } from './domain'
+  import { arrayfy } from './utils'
+  import DateCalendar from './DateCalendar.html'
+
+  function isHighlighted(hovered, targetIndex) {
+    return (target, selected) => {
+      selected = arrayfy(selected)
+
+      let [first, second] = selected
+      second = targetIndex === 0 ? second : hovered
+
+      if (!first || !second) return false
+
+      const year = target.getFullYear()
+      if (first.getFullYear() > year || second.getFullYear() < year) {
+        return false
+      }
+
+      const month = target.getMonth()
+      if (first.getMonth() > month || second.getMonth() < month) {
+        return false
+      }
+
+      const date = target.getDate()
+      if (first.getDate() > date || second.getDate() < date) {
+        return false
+      }
+
+      return true
+    }
+  }
+
+  export default {
+    setup: setupHigherCalendar(DateCalendar),
+
+    components: {
+      DateCalendar
+    },
+
+    helpers: {
+      isHighlighted
+    },
+
+    data() {
+      return {
+        targetIndex: 0
+      }
+    },
+
+    methods: {
+      onSelect(date) {
+        const index = this.get('targetIndex')
+        const prevSelected = arrayfy(this.get('selected'))
+        const selected = prevSelected.slice(0, index).concat(date)
+
+        this.set({
+          selected,
+          targetIndex: 1 - index
+        })
+
+        this.fire('select', selected)
+      },
+
+      onHover(date) {
+        this.set({
+          hovered: date
+        })
+      }
+    }
+  }
+</script>

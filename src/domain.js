@@ -12,6 +12,14 @@ export function setupCalendar(Ctor) {
   }
 }
 
+export function setupHigherCalendar(ChildCtor) {
+  return Ctor => {
+    Ctor.setLocale = function setLocale(locale) {
+      ChildCtor.setLocale(locale)
+    }
+  }
+}
+
 export function getMonthCalendar(year, month) {
   const target = new Date(year, month, 1)
   const offsetOfFirstDate = SUNDAY - target.getDay()

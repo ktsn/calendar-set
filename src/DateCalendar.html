@@ -41,16 +41,12 @@
 </div>
 
 <script>
-  import { no, format } from './utils'
+  import { no, arrayfy, format } from './utils'
   import { setupCalendar, getMonthCalendar, equalsDate } from './domain'
   import CellButton from './CellButton.html'
 
   function isSelected(date, selected) {
-    if (!selected) return false
-
-    selected = Array.isArray(selected) ? selected : [selected]
-
-    return selected.reduce((acc, s) => {
+    return arrayfy(selected).reduce((acc, s) => {
       return acc || equalsDate(date, s)
     }, false)
   }
