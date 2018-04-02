@@ -1,0 +1,9 @@
+{
+  "calendar-cell-size": "50px",
+  "calendar-color-hovered": "#ccc",
+  "calendar-text-color-hovered": "inherit",
+  "calendar-color-highlighted": "var(--calendar-color-hovered)",
+  "calendar-text-color-highlighted": "var(--calendar-text-color-hovred)",
+  "calendar-color-selected": "#888",
+  "calendar-text-color-selected": "#fff"
+}

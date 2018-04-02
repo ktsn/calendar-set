@@ -55,6 +55,32 @@ Similar to DateCalendar but can be selected range of two date.
 
 * `fire('select', selectedDate)`: `selectedDate` is an array and always sorted with ASC order by date.
 
+## Styles
+
+There is a default style at `calendar-set/dist/calendar-set.css`. If you want to use it, import it by appropriate way of your project setup.
+
+Example of webpack:
+
+```js
+// Import calendar default style
+import 'calendar-set/dist/calendar-set.css'
+
+// Import calendar component
+import { DateCalendar, en } from 'calendar-set'
+
+DateCalendar.setLocale(en)
+```
+
+Example loading from CDN:
+
+```html
+<!-- Import calendar default style -->
+<link rel="stylesheet" href="https://unpkg.com/calendar-set/dist/calendar-set.css">
+
+<!-- Import calendar script -->
+<script src="https://unpkg.com/calendar-set"></script>
+```
+
 ## License
 
 MIT

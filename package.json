@@ -47,6 +47,8 @@
     "eslint-plugin-html": "^4.0.2",
     "glob": "^7.1.2",
     "jest": "^22.4.2",
+    "postcss": "^6.0.21",
+    "postcss-custom-properties": "^7.0.0",
     "prettier": "1.11.1",
     "rollup-plugin-svelte": "^4.0.0",
     "svelte": "^1.58.0",
