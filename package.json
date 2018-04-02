@@ -23,7 +23,7 @@
     "url": "https://github.com/ktsn/calendar-set.git"
   },
   "scripts": {
-    "prepublish": "npm run test && npm run build",
+    "prepublishOnly": "npm run test && npm run build",
     "build": "bili --format cjs,es,umd,umd-min",
     "lint": "eslint --ext html src test",
     "test": "jest",
