@@ -1,5 +1,5 @@
-<DateCalendar selected="{{ selected }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, second) }}" on:select="onSelect(event)"
-  on:hover="onHover(event)"></DateCalendar>
+<DateCalendar current="{{ current }}" selected="{{ selected }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, second) }}"
+  on:select="onSelect(event)" on:hover="onHover(event)"></DateCalendar>
 
 <script>
   import { setupHigherCalendar, compareDateAsc } from './domain'
