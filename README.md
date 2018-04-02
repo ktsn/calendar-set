@@ -47,6 +47,8 @@ Similar to DateCalendar but can be selected range of two date.
     month: number
   }
   selected: Date | Date[] | undefined
+  hovered: Date | undefined
+  second: boolean // `true` if it is going to select the second date
   locale: Locale
 }
 ```
@@ -54,6 +56,7 @@ Similar to DateCalendar but can be selected range of two date.
 #### Events
 
 * `fire('select', selectedDate)`: `selectedDate` is an array and always sorted with ASC order by date.
+* `fire('hover', hoveredDate)`
 
 ## Styles
 
