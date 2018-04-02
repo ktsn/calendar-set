@@ -1,4 +1,4 @@
-<DateCalendar selected="{{ selected }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, targetIndex) }}" on:select="onSelect(event)"
+<DateCalendar selected="{{ selected }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, second) }}" on:select="onSelect(event)"
   on:hover="onHover(event)"></DateCalendar>
 
 <script>
@@ -6,13 +6,13 @@
   import { arrayfy } from './utils'
   import DateCalendar from './DateCalendar.html'
 
-  function isHighlighted(hovered, targetIndex) {
+  function isHighlighted(hovered, isSecond) {
     return (target, selected) => {
       const [first, second] = arrayfy(selected)
       const list = [
         first,
         target,
-        targetIndex === 0 ? second : hovered
+        isSecond ? hovered : second
       ]
         .filter(x => x)
         .sort(compareDateAsc)
@@ -34,13 +34,14 @@
 
     data() {
       return {
-        targetIndex: 0
+        second: false
       }
     },
 
     methods: {
       onSelect(date) {
-        const index = this.get('targetIndex')
+        const isSecond = this.get('second')
+        const index = isSecond ? 1 : 0
         const prevSelected = arrayfy(this.get('selected'))
         const selected = prevSelected.slice(0, index)
           .concat(date)
@@ -48,7 +49,7 @@
 
         this.set({
           selected,
-          targetIndex: 1 - index
+          second: !isSecond
         })
 
         this.fire('select', selected)
