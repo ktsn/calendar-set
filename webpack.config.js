@@ -1,5 +1,8 @@
 const path = require('path')
 const glob = require('glob')
+const postcss = require('postcss')
+const customProperties = require('postcss-custom-properties')
+const styleVars = require('./style-vars.json')
 
 const examplesBase = path.resolve(__dirname, 'examples')
 
@@ -28,7 +31,8 @@ module.exports = {
         test: /\.html$/,
         loader: 'svelte-loader',
         options: {
-          hotReload: true
+          hotReload: true,
+          style: processStyle
         }
       }
     ]
@@ -36,4 +40,24 @@ module.exports = {
   devServer: {
     contentBase: examplesBase
   }
+}
+
+function processStyle({ content }) {
+  return postcss({
+    plugins: [
+      customProperties({
+        preserve: false,
+        variables: styleVars
+      })
+    ]
+  })
+    .process(content, {
+      from: false
+    })
+    .then(({ css, map }) => {
+      return {
+        code: css,
+        map
+      }
+    })
 }
