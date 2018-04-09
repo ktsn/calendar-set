@@ -4,14 +4,42 @@ Framework agnostic calendar components
 
 ## Components
 
-All components have a static method `setLocale` to specify localized string shown in the calendar. You need to call the method before instantiating components. `calendar-set` provides built in locales `en` and `ja`.
+The components are implemented with [Svelte](https://svelte.technology/), so they can be used with [Svelte component API](https://svelte.technology/guide#component-api). The following is a simple example how you can use `DateCalendar` component.
 
 ```js
 import { en, DateCalendar } from 'calendar-set'
 
 // Set the locale object to the component
 DateCalendar.setLocale(en)
+
+// Instantiate the calendar component
+const calendar = new DateCalendar({
+  // Pass a DOM element which the component mount to
+  target: document.querySelector('#calendar'),
+
+  // Pass initial data of the component
+  data: {
+    selected: new Date()
+  }
+})
+
+// Observe calendar events
+calendar.on('select', selected => {
+  console.log(selected)
+})
+
+// Set calendar data
+calendar.set({
+  selected: new Date(2018, 0, 1)
+})
+
+// Destroy the component
+calendar.destroy()
 ```
+
+All components have a static method `setLocale` to specify localized string shown in the calendar. You need to call the method before instantiating components. `calendar-set` provides built in locales `en` and `ja`.
+
+If you want to use with [Vue.js](https://vuejs.org/), you may interested in [vue-svelte-adapter](https://github.com/ktsn/vue-svelte-adapter).
 
 ### DateCalendar
 
