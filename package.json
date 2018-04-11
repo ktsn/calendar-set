@@ -28,7 +28,8 @@
     "lint": "eslint --ext html src test",
     "test": "jest",
     "test:watch": "jest --watch",
-    "examples": "webpack-dev-server --hot --open"
+    "examples": "webpack-dev-server --hot --open",
+    "examples:deploy": "webpack --mode production && ./examples/deploy.sh"
   },
   "jest": {
     "testRegex": "/test/.+\\.spec\\.js$",

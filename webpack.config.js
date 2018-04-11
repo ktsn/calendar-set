@@ -22,7 +22,7 @@ module.exports = {
   entry: collectEntries(),
   output: {
     path: examplesBase,
-    filename: '[name]/__build__.js',
+    filename: '[name]/build.js',
     publicPath: '/'
   },
   module: {
