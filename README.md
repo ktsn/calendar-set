@@ -1,6 +1,6 @@
 # calendar-set
 
-Framework agnostic calendar components
+Framework agnostic calendar components ([demo](https://ktsn.github.io/calendar-set/))
 
 ## Components
 
