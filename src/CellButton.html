@@ -1,4 +1,5 @@
-<button class="calendar-cell-button {{ stateClass(selected, highlighted) }}" on:click="fire('click', event)" on:mouseenter="fire('mouseenter', event)">
+<button type="button" class="calendar-cell-button {{ stateClass(selected, highlighted) }}" on:click="fire('click', event)"
+  on:mouseenter="fire('mouseenter', event)">
   <slot></slot>
 </button>
 
