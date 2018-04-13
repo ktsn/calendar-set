@@ -1,0 +1,30 @@
+<p class="calendar-header">
+  {{#if year != null }}
+  <span class="calendar-year">
+    {{ format(locale.year, year) }}
+  </span>
+  {{/if}} {{#if month != null }}
+  <span class="calendar-month">
+    {{ format(locale.months[month]) }}
+  </span>
+  {{/if}}
+</p>
+
+<script>
+  import { no, arrayfy, format } from './utils'
+
+  export default {
+    helpers: {
+      format
+    }
+  }
+</script>
+
+<style>
+  .calendar-header {
+    margin: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+</style>
