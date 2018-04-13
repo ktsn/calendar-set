@@ -1,4 +1,9 @@
-import { getDateCalendar, equalsDate, lessThanDate } from '../src/domain'
+import {
+  getDateCalendar,
+  equalsDate,
+  lessThanDate,
+  getMonthCalendar
+} from '../src/domain'
 
 describe('getDateCalendar', () => {
   it('should return two dimensional array that represents a calendar of month', () => {
@@ -33,6 +38,28 @@ describe('getDateCalendar', () => {
       [d(25), d(26), d(27), d(28), d(29), d(30), d(31)]
     ])
     /* eslint-enable no-multi-spaces */
+  })
+})
+
+describe('getMonthCalendar', () => {
+  it('returns date objects of first date of months', () => {
+    const result = getMonthCalendar(2018)
+    const m = n => new Date(2018, n)
+
+    expect(result).toEqual([
+      m(0),
+      m(1),
+      m(2),
+      m(3),
+      m(4),
+      m(5),
+      m(6),
+      m(7),
+      m(8),
+      m(9),
+      m(10),
+      m(11)
+    ])
   })
 })
 

@@ -1,6 +1,7 @@
 import { accumlateWhile, range } from './utils'
 
 const WEEK_DAYS_NUM = 7
+const MONTH_NUM = 12
 const SUNDAY = 0
 
 /**
@@ -47,6 +48,12 @@ export function getDateCalendar(year, month) {
       return equalsMonth(next, year, month)
     }
   )
+}
+
+export function getMonthCalendar(year) {
+  return range(MONTH_NUM).map(month => {
+    return new Date(year, month)
+  })
 }
 
 function equalsMonth(date, year, month) {
