@@ -1,12 +1,12 @@
-<div class="calendar">
+<div class="date-calendar">
   {{#if locale}}
   <CalendarHeader locale="{{ locale }}" year="{{ current.year }}" month="{{ current.month }}" />
 
-  <table class="calendar-table">
+  <table class="date-calendar-table">
     <thead>
       <tr>
         {{#each locale.weekDays as weekDay, i}}
-        <th scope="col" class="calendar-cell heading {{ weekClass(i) }}">
+        <th scope="col" class="date-calendar-cell heading {{ weekClass(i) }}">
           {{ format(weekDay) }}
         </th>
         {{/each}}
@@ -17,7 +17,7 @@
       {{#each calendar as row}}
       <tr>
         {{#each row as cell, i}}
-        <td class="calendar-cell {{ weekClass(i) }}">
+        <td class="date-calendar-cell {{ weekClass(i) }}">
           {{#if cell}}
           <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted(cell, selected) }}" on:click="onClickCell(cell)"
             on:mouseenter="onHoverCell(cell)">
@@ -116,17 +116,17 @@
 </script>
 
 <style>
-  .calendar {
+  .date-calendar {
     width: calc(var(--calendar-cell-size) * 7);
   }
 
-  .calendar-table {
+  .date-calendar-table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
   }
 
-  .calendar-cell {
+  .date-calendar-cell {
     padding: 0;
     height: var(--calendar-cell-size);
     width: var(--calendar-cell-size);
@@ -134,7 +134,7 @@
     vertical-align: middle;
   }
 
-  .calendar-cell.heading {
+  .date-calendar-cell.heading {
     height: calc(var(--calendar-cell-size) * 0.6);
     font-weight: bold;
     font-size: 0.8em;
