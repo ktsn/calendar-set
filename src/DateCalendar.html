@@ -35,7 +35,7 @@
 
 <script>
   import { no, arrayfy, format } from './utils'
-  import { setupCalendar, getMonthCalendar, equalsDate } from './domain'
+  import { setupCalendar, getDateCalendar, equalsDate } from './domain'
   import CellButton from './CellButton.html'
   import CalendarHeader from './CalendarHeader.html'
 
@@ -85,7 +85,7 @@
 
     computed: {
       calendar: current => {
-        return getMonthCalendar(current.year, current.month)
+        return getDateCalendar(current.year, current.month)
       }
     },
 

@@ -1,8 +1,8 @@
-import { getMonthCalendar, equalsDate, lessThanDate } from '../src/domain'
+import { getDateCalendar, equalsDate, lessThanDate } from '../src/domain'
 
-describe('getMonthCalendar', () => {
+describe('getDateCalendar', () => {
   it('should return two dimensional array that represents a calendar of month', () => {
-    const result = getMonthCalendar(2018, 4)
+    const result = getDateCalendar(2018, 4)
     const undef = undefined
     const d = n => new Date(2018, 4, n)
 
@@ -19,7 +19,7 @@ describe('getMonthCalendar', () => {
   })
 
   it('should not generate empty row', () => {
-    const result = getMonthCalendar(2018, 2)
+    const result = getDateCalendar(2018, 2)
     const undef = undefined
     const d = n => new Date(2018, 2, n)
 

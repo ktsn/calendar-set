@@ -20,7 +20,7 @@ export function setupHigherCalendar(ChildCtor) {
   }
 }
 
-export function getMonthCalendar(year, month) {
+export function getDateCalendar(year, month) {
   const target = new Date(year, month, 1)
   const offsetOfFirstDate = SUNDAY - getWeekDay(target)
 
