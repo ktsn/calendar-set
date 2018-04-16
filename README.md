@@ -86,6 +86,24 @@ Similar to DateCalendar but can be selected range of two date.
 * `fire('select', selectedDate)`: `selectedDate` is an array and always sorted with ASC order by date.
 * `fire('hover', hoveredDate)`
 
+### DateCalendar
+
+#### Data
+
+```ts
+{
+  currentYear: number
+  selected: Date | Date[] | undefined
+  isHighlighted: (target: Date, selected: Date | Date[] | undefined) => boolean
+  locale: Locale
+}
+```
+
+#### Events
+
+* `fire('select', selectedMonth)`
+* `fire('hover', hoveredMonth)`
+
 ## Styles
 
 There is a default style at `calendar-set/dist/calendar-set.css`. If you want to use it, import it by appropriate way of your project setup.

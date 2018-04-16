@@ -56,7 +56,7 @@ export function getMonthCalendar(year) {
   })
 }
 
-function equalsMonth(date, year, month) {
+export function equalsMonth(date, year, month) {
   return getYear(date) === year && getMonth(date) === month
 }
 

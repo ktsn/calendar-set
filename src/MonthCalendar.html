@@ -1,0 +1,100 @@
+<div class="month-calendar">
+  {{#if locale }}
+  <CalendarHeader locale="{{ locale }}" year="{{ currentYear }}" />
+
+  <ul class="month-calendar-list" on:mouseleave="onHoverOut()">
+    {{#each calendar as month }}
+    <li class="month-calendar-item">
+      <CellButton selected="{{ isSelected(month, selected) }}" highlighted="{{ isHighlighted(month, selected) }}" on:mouseenter="onHoverCell(month)"
+        on:click="onClickCell(month)">
+        {{ format(locale.months[month.getMonth()]) }}
+      </CellButton>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</div>
+
+<script>
+  import { setupCalendar, getMonthCalendar, equalsMonth } from './domain'
+  import { no, format, arrayfy } from './utils'
+  import CellButton from './CellButton.html'
+  import CalendarHeader from './CalendarHeader.html'
+
+  function isSelected(month, selected) {
+    return arrayfy(selected).reduce((acc, s) => {
+      return acc || equalsMonth(month, s.getFullYear(), s.getMonth())
+    }, false)
+  }
+
+  export default {
+    setup: setupCalendar,
+
+    components: {
+      CellButton,
+      CalendarHeader
+    },
+
+    helpers: {
+      format,
+      isSelected
+    },
+
+    data() {
+      const today = new Date()
+
+      return {
+        currentYear: today.getFullYear(),
+        isHighlighted: no
+      }
+    },
+
+    computed: {
+      calendar: currentYear => getMonthCalendar(currentYear)
+    },
+
+    methods: {
+      onClickCell(month) {
+        if (!month) return
+        this.fire('select', month)
+      },
+
+      onHoverCell(month) {
+        this.fire('hover', month)
+      },
+
+      onHoverOut() {
+        this.fire('hover', null)
+      }
+    },
+
+    oncreate() {
+      const { locale } = this.get()
+      if (!locale) {
+        this.set({
+          locale: this.constructor.locale
+        })
+      }
+    }
+  }
+</script>
+
+<style>
+  .month-calendar {
+    width: calc(var(--month-calendar-cell-size) * 4);
+  }
+
+  .month-calendar-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .month-calendar-item {
+    flex: none;
+    width: var(--month-calendar-cell-size);
+    height: var(--month-calendar-cell-size);
+  }
+</style>
