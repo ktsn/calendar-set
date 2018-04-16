@@ -1,0 +1,20 @@
+<h1>MonthCalendar</h1>
+<MonthCalendar selected="{{ selected }}" on:select="set({ selected: event })" />
+
+<script>
+  import { en, MonthCalendar } from '../../src'
+
+  MonthCalendar.setLocale(en)
+
+  export default {
+    components: {
+      MonthCalendar
+    },
+
+    data() {
+      return {
+        selected: new Date()
+      }
+    }
+  }
+</script>

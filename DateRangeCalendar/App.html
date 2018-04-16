@@ -1,0 +1,73 @@
+<h1>DateRangeCalendar</h1>
+
+<h2>Normal</h2>
+<DateRangeCalendar current="{{ current }}" selected="{{ selected }}" on:select="set({ selected: event })" />
+
+<h2>Sync Two Calendars</h2>
+<div class="calendar-wrapper">
+  <div class="calendar">
+    <DateRangeCalendar current="{{ current }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+      on:hover="set({ hovered: event })" />
+  </div>
+  <div class="calendar">
+    <DateRangeCalendar current="{{ next }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+      on:hover="set({ hovered: event })" />
+  </div>
+</div>
+
+<script>
+  import { en, DateRangeCalendar } from '../../src'
+
+  DateRangeCalendar.setLocale(en)
+
+  export default {
+    components: {
+      DateRangeCalendar
+    },
+
+    data() {
+      const d = new Date()
+
+      return {
+        current: {
+          year: d.getFullYear(),
+          month: d.getMonth()
+        },
+        selected: null,
+        hovered: null,
+        second: false
+      }
+    },
+
+    computed: {
+      next: current => {
+        const n = new Date(current.year, current.month + 1)
+        return {
+          year: n.getFullYear(),
+          month: n.getMonth()
+        }
+      }
+    },
+
+    methods: {
+      selectSyncCalendar(selected) {
+        const isSecond = this.get('second')
+
+        this.set({
+          selected,
+          second: !isSecond
+        })
+      }
+    }
+  }
+</script>
+
+<style>
+  .calendar-wrapper {
+    display: flex;
+  }
+
+  .calendar:not(:first-child) {
+    margin-left: 20px;
+  }
+</style>
