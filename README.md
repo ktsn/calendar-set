@@ -86,7 +86,7 @@ Similar to DateCalendar but can be selected range of two date.
 * `fire('select', selectedDate)`: `selectedDate` is an array and always sorted with ASC order by date.
 * `fire('hover', hoveredDate)`
 
-### DateCalendar
+### MonthCalendar
 
 #### Data
 
