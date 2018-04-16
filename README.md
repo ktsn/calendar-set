@@ -64,7 +64,7 @@ If you want to use with [Vue.js](https://vuejs.org/), you may interested in [vue
 
 ### DateRangeCalendar
 
-Similar to DateCalendar but can be selected range of two date.
+Similar to DateCalendar but can be selected range of two dates.
 
 #### Data
 
@@ -102,6 +102,27 @@ Similar to DateCalendar but can be selected range of two date.
 #### Events
 
 * `fire('select', selectedMonth)`
+* `fire('hover', hoveredMonth)`
+
+### MonthRangeCalendar
+
+Similar to MonthCalendar but can be selected range of two months.
+
+#### Data
+
+```ts
+{
+  currentYear: number
+  selected: Date | Date[] | undefined
+  hovered: Date | undefined
+  second: boolean // `true` if it is going to select the second month
+  locale: Locale
+}
+```
+
+#### Events
+
+* `fire('select', selectedMonth)`: `selectedMonth` is an array and always sorted with ASC order by month.
 * `fire('hover', hoveredMonth)`
 
 ## Styles

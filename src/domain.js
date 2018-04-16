@@ -60,6 +60,10 @@ export function equalsMonth(date, year, month) {
   return getYear(date) === year && getMonth(date) === month
 }
 
+export function compareMonthAsc(a, b) {
+  return compareAscSeed(a, b, [getYear, getMonth])
+}
+
 export function equalsDate(a, b) {
   return compareDateAsc(a, b) === 0
 }
@@ -69,21 +73,22 @@ export function lessThanDate(a, b) {
 }
 
 export function compareDateAsc(a, b) {
-  function loop(a, b, getters) {
-    if (getters.length === 0) {
-      return 0
-    }
+  return compareAscSeed(a, b, [getYear, getMonth, getDate])
+}
 
-    const [getter, ...tail] = getters
-    const res = compareAsc(getter(a), getter(b))
-
-    if (res === 0) {
-      return loop(a, b, tail)
-    } else {
-      return res
-    }
+function compareAscSeed(a, b, getters) {
+  if (getters.length === 0) {
+    return 0
   }
-  return loop(a, b, [getYear, getMonth, getDate])
+
+  const [getter, ...tail] = getters
+  const res = compareAsc(getter(a), getter(b))
+
+  if (res === 0) {
+    return compareAscSeed(a, b, tail)
+  } else {
+    return res
+  }
 }
 
 function compareAsc(a, b) {

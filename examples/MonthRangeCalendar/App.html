@@ -1,0 +1,64 @@
+<h1>MonthRangeCalendar</h1>
+
+<h2>Normal</h2>
+<MonthRangeCalendar currentYear="{{ currentYear }}" selected="{{ selected }}" on:select="set({ selected: event })" />
+
+<h2>Sync Two Calendars</h2>
+<div class="calendar-wrapper">
+  <div class="calendar">
+    <MonthRangeCalendar currentYear="{{ currentYear }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}"
+      on:select="selectSyncCalendar(event)" on:hover="set({ hovered: event })" />
+  </div>
+  <div class="calendar">
+    <MonthRangeCalendar currentYear="{{ next }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+      on:hover="set({ hovered: event })" />
+  </div>
+</div>
+
+<script>
+  import { en, MonthRangeCalendar } from '../../src'
+
+  MonthRangeCalendar.setLocale(en)
+
+  export default {
+    components: {
+      MonthRangeCalendar
+    },
+
+    data() {
+      const d = new Date()
+
+      return {
+        currentYear: d.getFullYear(),
+        selected: null,
+        hovered: null,
+        second: false
+      }
+    },
+
+    computed: {
+      next: currentYear => currentYear + 1
+    },
+
+    methods: {
+      selectSyncCalendar(selected) {
+        const isSecond = this.get('second')
+
+        this.set({
+          selected,
+          second: !isSecond
+        })
+      }
+    }
+  }
+</script>
+
+<style>
+  .calendar-wrapper {
+    display: flex;
+  }
+
+  .calendar:not(:first-child) {
+    margin-left: 20px;
+  }
+</style>
