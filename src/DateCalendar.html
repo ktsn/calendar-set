@@ -1,36 +1,36 @@
 <div class="date-calendar">
-  {{#if locale}}
-  <CalendarHeader locale="{{ locale }}" year="{{ current.year }}" month="{{ current.month }}" />
+  {#if locale}
+  <CalendarHeader locale="{ locale }" year="{ current.year }" month="{ current.month }" />
 
   <table class="date-calendar-table">
     <thead>
       <tr>
-        {{#each locale.weekDays as weekDay, i}}
-        <th scope="col" class="date-calendar-cell heading {{ weekClass(i) }}">
-          {{ format(weekDay) }}
+        {#each locale.weekDays as weekDay, i}
+        <th scope="col" class="date-calendar-cell heading { weekClass(i) }">
+          { format(weekDay) }
         </th>
-        {{/each}}
+        {/each}
       </tr>
     </thead>
 
     <tbody on:mouseleave="onHoverOut()">
-      {{#each calendar as row}}
+      {#each calendar as row}
       <tr>
-        {{#each row as cell, i}}
-        <td class="date-calendar-cell {{ weekClass(i) }} {{ getClass && cell ? getClass(cell) : '' }}">
-          {{#if cell}}
-          <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted(cell, selected) }}" on:click="onClickCell(cell)"
+        {#each row as cell, i}
+        <td class="date-calendar-cell { weekClass(i) } { getClass && cell ? getClass(cell) : '' }">
+          {#if cell}
+          <CellButton selected="{ isSelected(cell, selected) }" highlighted="{ isHighlighted(cell, selected) }" on:click="onClickCell(cell)"
             on:mouseenter="onHoverCell(cell)">
-            {{ cell.getDate() }}
+            { cell.getDate() }
           </CellButton>
-          {{/if}}
+          {/if}
         </td>
-        {{/each}}
+        {/each}
       </tr>
-      {{/each}}
+      {/each}
     </tbody>
   </table>
-  {{/if}}
+  {/if}
 </div>
 
 <script>
@@ -84,7 +84,7 @@
     },
 
     computed: {
-      calendar: current => {
+      calendar: ({ current }) => {
         return getDateCalendar(current.year, current.month)
       }
     },
@@ -105,7 +105,7 @@
     },
 
     oncreate() {
-      const locale = this.get('locale')
+      const { locale } = this.get()
       if (!locale) {
         this.set({
           locale: this.constructor.locale

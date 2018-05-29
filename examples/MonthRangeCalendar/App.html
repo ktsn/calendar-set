@@ -1,16 +1,16 @@
 <h1>MonthRangeCalendar</h1>
 
 <h2>Normal</h2>
-<MonthRangeCalendar currentYear="{{ currentYear }}" selected="{{ selected }}" on:select="set({ selected: event })" />
+<MonthRangeCalendar currentYear="{ currentYear }" selected="{ selected }" on:select="set({ selected: event })" />
 
 <h2>Sync Two Calendars</h2>
 <div class="calendar-wrapper">
   <div class="calendar">
-    <MonthRangeCalendar currentYear="{{ currentYear }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}"
+    <MonthRangeCalendar currentYear="{ currentYear }" selected="{ selected }" hovered="{ hovered }" second="{ second }"
       on:select="selectSyncCalendar(event)" on:hover="set({ hovered: event })" />
   </div>
   <div class="calendar">
-    <MonthRangeCalendar currentYear="{{ next }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+    <MonthRangeCalendar currentYear="{ next }" selected="{ selected }" hovered="{ hovered }" second="{ second }" on:select="selectSyncCalendar(event)"
       on:hover="set({ hovered: event })" />
   </div>
 </div>
@@ -37,12 +37,12 @@
     },
 
     computed: {
-      next: currentYear => currentYear + 1
+      next: ({ currentYear }) => currentYear + 1
     },
 
     methods: {
       selectSyncCalendar(selected) {
-        const isSecond = this.get('second')
+        const { second: isSecond } = this.get()
 
         this.set({
           selected,

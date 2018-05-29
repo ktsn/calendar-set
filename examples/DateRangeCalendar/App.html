@@ -1,16 +1,16 @@
 <h1>DateRangeCalendar</h1>
 
 <h2>Normal</h2>
-<DateRangeCalendar current="{{ current }}" selected="{{ selected }}" on:select="set({ selected: event })" />
+<DateRangeCalendar current="{ current }" selected="{ selected }" on:select="set({ selected: event })" />
 
 <h2>Sync Two Calendars</h2>
 <div class="calendar-wrapper">
   <div class="calendar">
-    <DateRangeCalendar current="{{ current }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+    <DateRangeCalendar current="{ current }" selected="{ selected }" hovered="{ hovered }" second="{ second }" on:select="selectSyncCalendar(event)"
       on:hover="set({ hovered: event })" />
   </div>
   <div class="calendar">
-    <DateRangeCalendar current="{{ next }}" selected="{{ selected }}" hovered="{{ hovered }}" second="{{ second }}" on:select="selectSyncCalendar(event)"
+    <DateRangeCalendar current="{ next }" selected="{ selected }" hovered="{ hovered }" second="{ second }" on:select="selectSyncCalendar(event)"
       on:hover="set({ hovered: event })" />
   </div>
 </div>
@@ -40,7 +40,7 @@
     },
 
     computed: {
-      next: current => {
+      next: ({ current }) => {
         const n = new Date(current.year, current.month + 1)
         return {
           year: n.getFullYear(),
@@ -51,7 +51,7 @@
 
     methods: {
       selectSyncCalendar(selected) {
-        const isSecond = this.get('second')
+        const { second: isSecond } = this.get()
 
         this.set({
           selected,

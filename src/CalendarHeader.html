@@ -1,13 +1,13 @@
 <p class="calendar-header">
-  {{#if year != null }}
+  {#if year != null }
   <span class="calendar-year">
-    {{ format(locale.year, year) }}
+    { format(locale.year, year) }
   </span>
-  {{/if}} {{#if month != null }}
+  {/if} {#if month != null }
   <span class="calendar-month">
-    {{ format(locale.months[month]) }}
+    { format(locale.months[month]) }
   </span>
-  {{/if}}
+  {/if}
 </p>
 
 <script>

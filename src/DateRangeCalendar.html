@@ -1,4 +1,4 @@
-<DateCalendar current="{{ current }}" selected="{{ selected }}" getClass="{{ getClass }}" locale="{{ locale }}" isHighlighted="{{ isHighlighted(hovered, second) }}"
+<DateCalendar current="{ current }" selected="{ selected }" getClass="{ getClass }" locale="{ locale }" isHighlighted="{ isHighlighted(hovered, second) }"
   on:select="onSelect(event)" on:hover="onHover(event)"></DateCalendar>
 
 <script>
@@ -40,9 +40,9 @@
 
     methods: {
       onSelect(date) {
-        const isSecond = this.get('second')
+        const { second: isSecond, selected: _prevSelected } = this.get()
         const index = isSecond ? 1 : 0
-        const prevSelected = arrayfy(this.get('selected'))
+        const prevSelected = arrayfy(_prevSelected)
         const selected = prevSelected.slice(0, index)
           .concat(date)
           .sort(compareDateAsc)
