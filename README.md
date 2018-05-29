@@ -53,6 +53,7 @@ If you want to use with [Vue.js](https://vuejs.org/), you may interested in [vue
   }
   selected: Date | Date[] | undefined
   isHighlighted: (target: Date, selected: Date | Date[] | undefined) => boolean
+  getClass: (target: Date) => string
   locale: Locale
 }
 ```
@@ -76,6 +77,7 @@ Similar to DateCalendar but can be selected range of two dates.
   }
   selected: Date | Date[] | undefined
   hovered: Date | undefined
+  getClass: (target: Date) => string
   second: boolean // `true` if it is going to select the second date
   locale: Locale
 }
@@ -95,6 +97,7 @@ Similar to DateCalendar but can be selected range of two dates.
   currentYear: number
   selected: Date | Date[] | undefined
   isHighlighted: (target: Date, selected: Date | Date[] | undefined) => boolean
+  getClass: (target: Date) => string
   locale: Locale
 }
 ```
@@ -115,6 +118,7 @@ Similar to MonthCalendar but can be selected range of two months.
   currentYear: number
   selected: Date | Date[] | undefined
   hovered: Date | undefined
+  getClass: (target: Date) => string
   second: boolean // `true` if it is going to select the second month
   locale: Locale
 }

@@ -4,7 +4,7 @@
 
   <ul class="month-calendar-list" on:mouseleave="onHoverOut()">
     {{#each calendar as month }}
-    <li class="month-calendar-item">
+    <li class="month-calendar-item {{ getClass ? getClass(month) : '' }}">
       <CellButton selected="{{ isSelected(month, selected) }}" highlighted="{{ isHighlighted(month, selected) }}" on:mouseenter="onHoverCell(month)"
         on:click="onClickCell(month)">
         {{ format(locale.months[month.getMonth()]) }}

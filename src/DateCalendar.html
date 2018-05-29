@@ -17,7 +17,7 @@
       {{#each calendar as row}}
       <tr>
         {{#each row as cell, i}}
-        <td class="date-calendar-cell {{ weekClass(i) }}">
+        <td class="date-calendar-cell {{ weekClass(i) }} {{ getClass && cell ? getClass(cell) : '' }}">
           {{#if cell}}
           <CellButton selected="{{ isSelected(cell, selected) }}" highlighted="{{ isHighlighted(cell, selected) }}" on:click="onClickCell(cell)"
             on:mouseenter="onHoverCell(cell)">
