@@ -24,6 +24,7 @@
   },
   "scripts": {
     "prepublishOnly": "npm run test && npm run build",
+    "prebuild": "bili --format es --config bili.config.pre.js",
     "build": "bili --format cjs,es,umd,umd-min",
     "lint": "eslint --ext html src test",
     "test": "jest",
